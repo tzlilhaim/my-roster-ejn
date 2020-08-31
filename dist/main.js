@@ -1,6 +1,8 @@
-const server = require('../server')
+const renderer = new Renderer()
 
-$("#search-bar>button").on("click",function(){
-    const inputValue = $("#search-bar>input").val()
-    fetch(`/teams/${inputValue}`)
-})
+getRoster = function() {
+  const team = $('#team-name-input').val()
+  $.get(`/teams/${team}`, function(data) {
+      renderer.renderPlayers(data)
+  })
+}

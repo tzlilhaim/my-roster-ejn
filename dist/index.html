@@ -4,16 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Roster - EJN</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="container">
       <div id="search-bar">
-        <input type="text" name="team-name-input"/>
-        <button>Get Roster</button>
+        <input type="text" name="team-name-input" />
+        <button onclick="getRoster()" >Get Roster</button>
       </div>
+      <div id="players-container"></div>
     </div>
+    <script id="player-template" type="text/x-handlebars-template">
+      {{#each players}}
+        <div class="players">
+          <div class="player-name">
+            {{firstName}} {{lastName}}
+          </div>
+          <div class="player-jersey">
+            {{jersey}}
+          </div>
+          <img class="player-headshot" src="" />
+          <div class="player-pos">
+            {{pos}}
+          </div>
+        </div>
+      {{/each}}
+    </script>
     <script src="/scripts/handlebars/dist/handlebars.js"></script>
     <script src="/scripts/jquery/dist/jquery.js"></script>
+    <script src="./renderer.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>
