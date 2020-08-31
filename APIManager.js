@@ -22,12 +22,19 @@ class APIManager {
         const leagues = Object.keys(players.league)
         const activePlayersInTeam = []
         for (let leagueName of leagues) {
-          const playersInLeague = players.league[leagueName].filter(
-            (p) => p.teamId === am.teamToIDs[teamName] && p.isActive
-          )
+          const playersInLeague = players.league[leagueName]
+            .filter((p) => p.teamId === am.teamToIDs[teamName] && p.isActive)
+            .map((player) => {
+              return {
+                firstName: player.firstName,
+                lastName: player.lastName,
+                jersey: player.jersey,
+                pos: player.pos,
+              }
+            })
           activePlayersInTeam.push(...playersInLeague)
         }
-        callback.send({players: activePlayersInTeam})
+        callback.send({ players: activePlayersInTeam })
       }
     )
   }
