@@ -26,6 +26,7 @@
   width: 100%;
   background-color: rgba(255, 255, 255, 0.829);
   box-shadow: 5px 5px 5px rgb(92, 81, 81);
+  z-index: 1;
 }
 
 #team-name-input {
@@ -169,7 +170,6 @@ button.stats {
   text-align: center;
   color: white;
   border: solid 2px white;
-  z-index: 1;
   position: absolute;
   left: 50%;
   top: 50%;
