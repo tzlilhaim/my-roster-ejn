@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Roster - EJN</title>
+    <title>My Roster - NBA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="container">
       <div id="search-bar">
-        <input type="text" name="team-name-input" />
-        <button onclick="getRoster()" >Get Roster</button>
+         <i class="fa fa-exclamation-circle fa-lg"></i>
+        <input type="text" id="team-name-input" placeholder="Enter team name"/>
+        <button onclick="getRoster()">Get Roster</button>
       </div>
       <div id="players-container"></div>
     </div>
@@ -23,7 +26,11 @@
           <div class="player-jersey">
             {{jersey}}
           </div>
-          <img class="player-headshot" src="" />
+          <div class="player-headshot">
+            <img src={{headshotUrl}} />
+            <div class="overlay"></div>
+            <button class="stats">show stats</button>
+          </div>
           <div class="player-pos">
             {{pos}}
           </div>
