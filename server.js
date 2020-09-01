@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, "dist")))
 app.use("/scripts", express.static(__dirname + "/node_modules"))
 
 app.get("/teams/:teamName", function (req, res) {
-  const teamName = [req.params.teamName]
+  const teamName = String([req.params.teamName]).toLowerCase()
   const year = "2018"
   routes.teams.get(year,teamName,res)
 })

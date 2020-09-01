@@ -4,19 +4,34 @@ class Renderer {
       $playersContainer: $("#players-container"),
       $playersTemplate: $("#player-template"),
     }
-  }
-  
-  getTemplateHTML(data) {
-    const source = this.view.$playersTemplate.html()
-    const template = Handlebars.compile(source)
-    const newHtml = template({ data })
-    return newHtml
+    this.data = {}
   }
 
   renderPlayers(players) {
-    console.log(players)
-    const newHTML = this.getTemplateHTML(players)
-    console.log(newHTML)
-    $("#players-container").append(newHTML)
+    const source = this.view.$playersTemplate.html()
+    const template = Handlebars.compile(source)
+    const newHTML = template({ players })
+    this.view.$playersContainer.append(newHTML)
+  }
+  renderAlertedInput() {
+    const $input = $("#team-name-input")
+    const $alertIcon = $("#search-bar>i")
+    $input.addClass("alerted")
+    $alertIcon.addClass("alerted")
+    setTimeout(function () {
+      $input.removeClass("alerted")
+      $alertIcon.removeClass("alerted")
+    }, 3000)
   }
 }
+
+// Make search bar sticky on scroll
+$(window).scroll(function() {    
+  let scroll = $(window).scrollTop();
+
+  if (scroll >= 100) {
+      $("#search-bar").addClass("sticky");
+  } else {
+      $("#search-bar").removeClass("sticky");
+  }
+})
