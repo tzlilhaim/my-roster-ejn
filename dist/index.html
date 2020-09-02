@@ -16,12 +16,28 @@
       <div id="search-bar">
         <i class="fa fa-exclamation-circle fa-lg"></i>
         <input type="text" id="team-name-input" placeholder="Enter team name" />
-        <button onclick="getRoster()">Get Roster</button>
+        <button id="search-team" onclick="getRoster()">
+          <i class="fas fa-search"></i> Get Roster
+        </button>
+        <button class="dream-team" onclick="openDreamTeamModal()">
+          <i class="far fa-star"></i> Dream Team
+        </button>
         <div id="shown-team"></div>
       </div>
       <div id="players-container"></div>
     </div>
-    </script>
+    <div id="dream-team-modal" class="modal" class="dream-team">
+      <div id="dream-team-container">
+        <span class="close">&times;</span>
+        <h1>My dream team:</h1>
+        <div id="dream-team-players"></div>
+      </div>
+    </div>
+    <div class="modal" class="dream-team">
+      <div>
+        <div id="popup-modal"></div>
+      </div>
+    </div>
     <script id="player-template" type="text/x-handlebars-template">
       {{#each data}}
         <div
@@ -31,8 +47,15 @@
         >
           <div class="flip-card-inner">
             <div class="flip-card-front">
-              <div class="player-name">
-                {{firstName}} {{lastName}}
+              <div class="player-card-header">
+                <div class="player-name">
+                  {{firstName}} {{lastName}}
+                </div>
+                <i
+                  class="far fa-star fa-2x"
+                  onmouseover="this.className = 'fas fa-star fa-2x'"
+                  onmouseout="this.className = 'far fa-star fa-2x'"
+                ></i>
               </div>
               <div class="player-jersey">
                 {{jersey}}
@@ -165,15 +188,72 @@
         <h4>
           Couldn't get this player's statistics
         </h4>
-          <i class="far fa-grin-beam-sweat fa-4x"></i>
+        <i class="far fa-grin-beam-sweat fa-4x"></i>
       </div>
-  </script>
+    </script>
     <script id="empty-team-template" type="text/x-handlebars-template">
       <div class="empty-state">
-      <i class="fas fa-basketball-ball fa-10x"></i><br>
-      <h1>{{data.title}} <span>"{{data.teamName}}"</span></h1>
-      <br><h3>{{data.subTitle}}</h3></div>
-  </script>
+        <i class="fas fa-basketball-ball fa-8x"></i>
+        <br />
+        <h1>
+          {{data.title}}
+          <span>
+            "{{data.teamName}}"
+          </span>
+        </h1>
+        <br />
+        <h3>
+          {{data.subTitle}}
+        </h3>
+      </div>
+    </script>
+    <script id="dream-team-empty-template" type="text/x-handlebars-template">
+      <div class="empty-state">
+        <i class="fas fa-basketball-ball fa-8x"></i>
+        <br />
+        <h1>
+          {{data.title}}
+        </h1>
+        <br />
+        <h3>
+          {{data.subTitle}}
+        </h3>
+      </div>
+    </script>
+    <script id="dream-team-template" type="text/x-handlebars-template">
+      {{#each data}}
+        <div
+          class="player-dream-team"
+          data-firstName={{firstName}}
+          data-lastName={{lastName}}>
+          <p class="dt-player-name">
+            {{firstName}} {{lastName}}
+          </p>
+          <ul>
+            <li class="dt-player-jersey">
+              Jersey: {{jersey}}
+            </li>
+            <li class="dt-player-pos">
+              Position: {{pos}}
+            </li>
+          </ul>
+          <img src={{headshotUrl}} />
+        </div>
+      {{/each}}
+    </script>
+    <script id="success-dream-team-template" type="text/x-handlebars-template">
+      <h1>
+        Successfully {{data.title}}
+      </h1>
+    </script>
+    <script id="failure-dream-team-template" type="text/x-handlebars-template">
+      <h1>
+        {{data.title}}
+      </h1>
+      <h3>
+        {{data.subTitle}}
+      </h3>
+    </script>
     <script src="/scripts/handlebars/dist/handlebars.js"></script>
     <script src="/scripts/jquery/dist/jquery.js"></script>
     <script src="./renderer.js"></script>

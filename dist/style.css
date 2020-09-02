@@ -16,11 +16,11 @@
   height: auto;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: 0.1fr 20fr 4fr;
+  grid-template-columns: 0.1fr 15fr 5fr 5fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
-    "i input btn"
-    "t t t";
+    "i input search dreamTeam"
+    "t t t t";
   padding: 10px;
 }
 
@@ -81,7 +81,6 @@ input.alerted {
 }
 
 #search-bar > button {
-  grid-area: btn;
   display: block;
   font-family: "Graduate", cursive;
   cursor: pointer;
@@ -108,6 +107,20 @@ input.alerted {
   font-weight: bold;
 }
 
+button.dream-team {
+  grid-area: dreamTeam;
+}
+
+#search-team {
+  grid-area: search;
+}
+
+@media only screen and (max-width: 740px) {
+  #search-bar i {
+    display: none;
+  }
+}
+
 #players-container {
   grid-row: 2;
   display: grid;
@@ -116,6 +129,7 @@ input.alerted {
   height: 100%;
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: repeat(auto, 1fr);
 }
 
 .player {
@@ -163,6 +177,13 @@ input.alerted {
   background-color: rgb(218, 120, 29);
 }
 
+.player.starred .flip-card-front {
+  background-color: rgb(204, 172, 68);
+}
+.player.starred .flip-card-back {
+  background-color: rgb(204, 172, 68);
+}
+
 .flip-card-front {
   display: grid;
   grid-template-rows: 1fr 1fr 8fr 1fr;
@@ -189,13 +210,14 @@ input.alerted {
 .statistics-header .go-back {
   grid-column: 1;
   color: black;
-  cursor: pointer;
   height: 100%;
   width: 100%;
 }
 
-.statistics-header .go-back:hover {
+.statistics-header .go-back:hover,
+.statistics-header .go-back:active {
   color: white;
+  cursor: pointer;
 }
 
 .statistics-header h4 {
@@ -213,9 +235,29 @@ input.alerted {
   color: white;
 }
 
-.player-name {
+.player-card-header {
   grid-row: 1;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
 }
+
+.player-name {
+  grid-column: 1;
+  font-weight: bold;
+  font-size: large;
+}
+.player-card-header > i.fa-star {
+  grid-column: 2;
+  color: yellow;
+  justify-self: end;
+  cursor: pointer;
+}
+
+.player-card-header > i.fa-star:active {
+  color: rgb(194, 164, 29);
+  cursor: pointer;
+}
+
 .player-jersey {
   grid-row: 2;
 }
@@ -232,16 +274,18 @@ input.alerted {
   box-shadow: 1px 2px 1px black;
   position: relative;
 }
-img {
+.player img {
   display: block;
   max-width: 100%;
   width: auto;
-  height: auto;
+  position: absolute;
+  bottom: 0;
 }
 
 .player-headshot:hover .overlay {
   display: block;
-  background-color: rgba(41, 25, 11, 0.7);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .player-headshot:hover button {
@@ -274,19 +318,23 @@ button.showStats {
   outline: none;
 }
 
-#players-container>.empty-state {
+button.showStats:active {
+  background-color: rgb(218, 120, 29);
+}
+
+#players-container > .empty-state {
   text-align: center;
   background-color: rgb(248, 242, 236);
   padding: 5%;
   max-height: fit-content;
 }
 
-#players-container>.empty-state > h1 {
+#players-container > .empty-state > h1 {
   color: rgb(218, 120, 29);
   font-weight: bold;
 }
 
-#players-container>.empty-state > h1 > span {
+#players-container > .empty-state > h1 > span {
   color: rgb(0, 158, 158);
 }
 
@@ -294,9 +342,91 @@ button.showStats {
   display: flex;
   align-content: center;
   justify-content: center;
+  text-align: center;
 }
 
-/* .flip-card-back .empty-state .fa-grin-beam-sweat{
-grid-column: 2;
-margin: ;
-} */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  font-family: "Graduate", cursive;
+}
+
+#dream-team-container {
+  background-color: rgb(248, 242, 236);
+  margin: 15% auto;
+  padding: 20px;
+  width: 80%;
+  height: auto;
+  max-height: 80%;
+  text-align: center;
+}
+
+.close {
+  color: black;
+  float: right;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:active {
+  color: rgb(218, 120, 29);
+  cursor: pointer;
+}
+#dream-team-players {
+  padding: 20px;
+}
+
+#dream-team-players .empty-state > i {
+  color: rgb(218, 120, 29);
+}
+
+#popup-modal {
+  background-color: rgb(248, 242, 236);
+  margin: 15% auto;
+  padding: 20px;
+  width: 80%;
+  height: auto;
+  max-height: 80%;
+  text-align: center;
+}
+
+#dream-team-players {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.player-dream-team {
+  text-align: left;
+  border: solid 1px rgb(218, 120, 29);
+  padding: 10px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+}
+
+.player-dream-team>img{
+  grid-column: 2;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+.player-dream-team>ul{
+  grid-column: 1;
+}
+.player-dream-team>p{
+  font-weight: bold;
+  color: rgb(218, 120, 29);
+}

@@ -7,6 +7,13 @@ class Renderer {
       $statsTemplate: $("#stats-template"),
       $emptyStatsTemplate: $("#empty-stats-template"),
       $emptyTeamTemplate: $("#empty-team-template"),
+      $dreamTeamTeamplate: $("#dream-team-template"),
+      $dreamTeamModal: $("#dream-team-modal"),
+      $dreamTeamEmptyTemplate: $("#dream-team-empty-template"),
+      $dreamTeamContainer: $("#dream-team-players"),
+      $successDreamTeamTemplate: $("#success-dream-team-template"),
+      $failureDreamTeamTemplate: $("#failure-dream-team-template"),
+      $popupDreamTeamModal: $("#popup-modal"),
     }
   }
   getTemplatedHTML($template, data) {
@@ -58,7 +65,7 @@ class Renderer {
       newHTML = this.getTemplatedHTML(this.view.$emptyStatsTemplate, {})
       $player.find(".flip-card-back").addClass("empty")
     }
-    
+
     $player.find(".flip-card-back").append(newHTML)
     this.renderFlipCardBack($player)
   }
@@ -74,15 +81,42 @@ class Renderer {
     this.view.$playersContainer.addClass("empty")
     this.view.$playersContainer.append(newHTML)
   }
-}
-
-// Make search bar sticky on scroll
-$(window).scroll(function () {
-  let scroll = $(window).scrollTop()
-
-  if (scroll >= 100) {
-    $("#search-bar").addClass("sticky")
-  } else {
-    $("#search-bar").removeClass("sticky")
+  renderDreamTeam(dreamTeam) {
+    this.view.$dreamTeamContainer.empty()
+    let newHTML = {}
+    if (dreamTeam.length) {
+      if (this.view.$dreamTeamModal.hasClass("empty")) {
+        this.view.$dreamTeamModal.removeClass("empty")
+      }
+      newHTML = this.getTemplatedHTML(this.view.$dreamTeamTeamplate, dreamTeam)
+    } else {
+      const empty = {
+        title: "The dream team is still empty",
+        subTitle: "Please add up to 5 players",
+      }
+      this.view.$dreamTeamModal.addClass("empty")
+      newHTML = this.getTemplatedHTML(this.view.$dreamTeamEmptyTemplate, empty)
+    }
+    this.view.$dreamTeamModal.css("display", "block")
+    this.view.$dreamTeamContainer.append(newHTML)
   }
-})
+  closeDreamTeam() {
+    this.view.$dreamTeamModal.css("display", "none")
+  }
+  renderPopupDreamTeam(data) {
+    this.view.$popupDreamTeamModal.empty()
+    let newHTML ={}
+    if(data.isSuccess){
+      newHTML = this.getTemplatedHTML(this.view.$successDreamTeamTemplate,data)
+    }else{
+      newHTML = this.getTemplatedHTML(this.view.$failureDreamTeamTemplate,data)
+    }
+
+    this.view.$popupDreamTeamModal.append(newHTML)
+    const $modal = this.view.$popupDreamTeamModal.closest(".modal")
+    $modal.css("display", "block")
+    setTimeout(function () {
+      $modal.css("display", "none")
+    }, 2500)
+  }
+}
