@@ -10,7 +10,7 @@ router.get("/health", function (req, res) {
 router.get("/teams/:teamName", function (req, res) {
     const teamName = String([req.params.teamName]).toLowerCase()
     const year = "2018"
-    teams.get(year,teamName,res)
+    teams.getTeam(year,teamName,res)
   })
 
   router.get("/playerStats/:player", function (req, res) {
@@ -20,7 +20,23 @@ router.get("/teams/:teamName", function (req, res) {
 
   router.post("/team", function(req, res){
     const team = req.body
-    teams.post(team, res)
+    teams.addTeam(team, res)
+  })
+
+  router.get("/dreamTeam", function (req, res) {
+    teams.getDreamTeam(res)
+  })
+
+  router.post("/roster", function (req, res) {
+    const firstName = req.body.firstName
+    const lastName = req.body.lastName
+    teams.addToDreamTeam(firstName,lastName,res)
+  })
+
+  router.delete("/roster", function (req, res) {
+    const firstName = req.body.firstName
+    const lastName = req.body.lastName
+    teams.removeFromDreamTeam(firstName,lastName,res)
   })
 
 module.exports = router
