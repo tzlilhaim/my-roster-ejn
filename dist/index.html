@@ -4,39 +4,164 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Roster - NBA</title>
-    <link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Graduate&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="container">
       <div id="search-bar">
-         <i class="fa fa-exclamation-circle fa-lg"></i>
-        <input type="text" id="team-name-input" placeholder="Enter team name"/>
+        <i class="fa fa-exclamation-circle fa-lg"></i>
+        <input type="text" id="team-name-input" placeholder="Enter team name" />
         <button onclick="getRoster()">Get Roster</button>
+        <div id="shown-team"></div>
       </div>
       <div id="players-container"></div>
     </div>
+    </script>
     <script id="player-template" type="text/x-handlebars-template">
-      {{#each players}}
-        <div class="players">
-          <div class="player-name">
-            {{firstName}} {{lastName}}
-          </div>
-          <div class="player-jersey">
-            {{jersey}}
-          </div>
-          <div class="player-headshot">
-            <img src={{headshotUrl}} />
-            <div class="overlay"></div>
-            <button class="stats">show stats</button>
-          </div>
-          <div class="player-pos">
-            {{pos}}
+      {{#each data}}
+        <div
+          class="player"
+          data-firstName={{firstName}}
+          data-lastName={{lastName}}
+        >
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="player-name">
+                {{firstName}} {{lastName}}
+              </div>
+              <div class="player-jersey">
+                {{jersey}}
+              </div>
+              <div class="player-headshot">
+                <img src={{headshotUrl}} />
+                <div class="overlay"></div>
+                <button class="showStats">
+                  show stats
+                </button>
+              </div>
+              <div class="player-pos">
+                {{pos}}
+              </div>
+            </div>
+            <div class="flip-card-back"></div>
           </div>
         </div>
       {{/each}}
     </script>
+    <script id="stats-template" type="text/x-handlebars-template">
+      <div class="statistics-header">
+        <i class="fas fa-chevron-left"></i>
+        <h4>
+          {{data.name}}'s statistics:
+        </h4>
+      </div>
+      <div class="stats">
+        <span>
+          Team Name:
+        </span>{{data.team_name}}
+      </div>
+      <div class="stats">
+        <span>
+          Games played:
+        </span>{{data.games_played}}
+      </div>
+      <div class="stats">
+        <span>
+          Minutes per game:
+        </span>{{data.minutes_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Field goal attempted per game:
+        </span>{{data.field_goals_attempted_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Field goals made per game:
+        </span>{{data.field_goals_made_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Field goal precentage:
+        </span>{{data.field_goal_percentage}}
+      </div>
+      <div class="stats">
+        <span>
+          Field throw percentage:
+        </span>{{data.free_throw_percentage}}
+      </div>
+      <div class="stats">
+        <span>
+          Three point attempted per game:
+        </span>{{data.three_point_attempted_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Three point made per game:
+        </span>{{data.three_point_made_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Three point percentage:
+        </span>{{data.three_point_percentage}}
+      </div>
+      <div class="stats">
+        <span>
+          Points per game:
+        </span>
+        {{data.points_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Offensive rebounds per game:
+        </span>{{data.offensive_rebounds_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Defensive rebounds per game:
+        </span>{{data.defensive_rebounds_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Rebounds per game:
+        </span>{{data.rebounds_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Assists per game:
+        </span>{{data.assits_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Steals per game:
+        </span>{{data.steals_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Blocks per game:
+        </span>{{data.blocks_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Turnovers per game:
+        </span>{{data.turnovers_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Player efficiency rating:
+        </span>{{data.player_efficiency_rating}}
+      </div>
+    </script>
+    <script id="empty-state-template" type="text/x-handlebars-template">
+      <i class="fas fa-basketball-ball"></i><br>
+      <h1 class="empty-state">{{data.title}} <span>{{data.teamName}}</span></h1>
+      <br><h3>{{data.subTitle}}</h3>
+  </script>
     <script src="/scripts/handlebars/dist/handlebars.js"></script>
     <script src="/scripts/jquery/dist/jquery.js"></script>
     <script src="./renderer.js"></script>

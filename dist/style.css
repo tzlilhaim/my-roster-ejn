@@ -7,16 +7,20 @@
   font-family: "Graduate", cursive;
   display: grid;
   padding: 10px;
+  grid-template-rows: 1fr 10fr;
 }
 
 #search-bar {
   grid-row: 1;
   width: 100%;
-  max-height: 50px;
+  height: auto;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: 0.5fr 20fr 4fr;
-  align-items: center;
+  grid-template-columns: 0.1fr 20fr 4fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+  "i input btn"
+  "t t t";
   padding: 10px;
 }
 
@@ -25,17 +29,18 @@
   top: 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.829);
-  box-shadow: 5px 5px 5px rgb(92, 81, 81);
+  box-shadow: 5px 5px 5px rgba(116, 60, 8, 0.7);
   z-index: 1;
 }
 
 #team-name-input {
-  grid-column: 2;
-  text-align: center;
+  grid-area: input;
+  text-indent: 20px;
+  padding: 10px;
   width: 100%;
   font-family: "Graduate", cursive;
   border: solid 2px rgba(218, 120, 29, 0.527);
-  height: 100%;
+  max-height: 100px;
 }
 
 #team-name-input:hover {
@@ -44,7 +49,7 @@
 }
 
 #team-name-input:focus {
-  background-color: rgba(218, 120, 29, 0.452);
+  background-color: rgba(218, 120, 29, 0.116);
   outline: none;
 }
 
@@ -64,6 +69,7 @@ input.alerted {
 }
 
 #search-bar > i {
+    grid-area: i;
   width: auto;
   height: auto;
   display: none;
@@ -72,21 +78,20 @@ input.alerted {
 #search-bar > i.alerted {
   display: inline-block;
   color: red;
-  grid-column: 1;
 }
 
 #search-bar > button {
-  grid-column: 3;
+  grid-area: btn;
   display: block;
   font-family: "Graduate", cursive;
   cursor: pointer;
   background-color: white;
   border: solid 2px rgba(218, 120, 29, 0.527);
-  height: 100%;
+  max-height: 100px;
   outline: none;
 }
 #search-bar > button:hover {
-  background-color: rgba(218, 120, 29, 0.452);
+  background-color: rgba(218, 120, 29, 0.527);
   outline: none;
 }
 
@@ -95,6 +100,12 @@ input.alerted {
   color: white;
   border: none;
   outline: none;
+}
+
+#shown-team{
+    grid-area: t;
+    text-align: center;
+    font-weight: bold;
 }
 
 #players-container {
@@ -107,16 +118,99 @@ input.alerted {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.players {
-  background-color: rgb(218, 120, 29);
-  box-shadow: 1px 1px 1px 1px black;
+.player {
   color: black;
+  background-color: transparent;
+}
+
+.flip-card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  text-align: center;
+  display: flex;
+  background-color: rgb(218, 120, 29);
+  border: solid 1px black;
+  border-radius: 5px;
+  perspective: 1000px;
+  box-shadow: 1px 1px 1px 1px black;
+}
+
+.player.flpped {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.player.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.player.flipped .player-headshot {
+  display: none;
+}
+
+.flip-card-front,
+.flip-card-back {
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  text-align: center;
+}
+
+.flip-card-front {
   display: grid;
   grid-template-rows: 1fr 1fr 8fr 1fr;
-  text-align: center;
-  height: auto;
   padding: 5px;
-  border-radius: 5px;
+}
+
+.flip-card-back {
+  display: grid;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  position: absolute;
+  overflow: scroll;
+}
+
+.statistics-header{
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  padding: 10px;
+}
+
+.statistics-header i{
+    grid-column: 1;
+    color: black;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+}
+
+.statistics-header i:hover{
+    color: white
+}
+
+.statistics-header h4{
+    grid-column: 2;
+    margin: 0;
+}
+
+.flip-card-back .stats{
+    margin: 10px;
+    font-size: small;
+    text-align: left;
+  }
+
+.flip-card-back span {
+  color: white;
 }
 
 .player-name {
@@ -143,12 +237,11 @@ img {
   max-width: 100%;
   width: auto;
   height: auto;
-  position: absolute;
 }
 
 .player-headshot:hover .overlay {
   display: block;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(41, 25, 11, 0.7);
 }
 
 .player-headshot:hover button {
@@ -165,7 +258,7 @@ img {
   transition: background 0.5s ease;
 }
 
-button.stats {
+button.showStats {
   display: none;
   text-align: center;
   color: white;
@@ -178,4 +271,11 @@ button.stats {
   padding: 10px;
   cursor: pointer;
   font-family: "Graduate", cursive;
+  outline: none;
+}
+
+.empty-state{
+    color: rgb(218, 120, 29);
+    font-weight: bold;
+    align-content: center;
 }
