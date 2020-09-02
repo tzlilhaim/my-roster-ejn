@@ -29,11 +29,11 @@ $("#players-container").on("click", "button.showStats", function () {
   const player = `${lastName}+${firstName}`
 
   $.get(`/playerStats/${player}`, function (stats) {
-    renderer.renderPlayerStats($player, stats)
+      renderer.renderPlayerStats($player, stats)
   })
 })
 
-$("#players-container").on("click", ".statistics-header>i", function () {
+$("#players-container").on("click", ".statistics-header>.go-back", function () {
   $player = $(this).closest(".player")
   renderer.renderFlipCardFront($player)
 })

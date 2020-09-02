@@ -5,7 +5,8 @@ class Renderer {
       $playersContainer: $("#players-container"),
       $playersTemplate: $("#player-template"),
       $statsTemplate: $("#stats-template"),
-      $emptyStateTemplate: $("empty-state-template"),
+      $emptyStatsTemplate: $("#empty-stats-template"),
+      $emptyTeamTemplate: $("#empty-team-template"),
     }
   }
   getTemplatedHTML($template, data) {
@@ -21,6 +22,9 @@ class Renderer {
       this.view.$playersTemplate,
       players.team
     )
+    if (this.view.$playersContainer.hasClass("empty")) {
+      this.view.$playersContainer.removeClass("empty")
+    }
     this.view.$playersContainer.append(newHTML)
 
     this.view.$shownTeamHeader.text("The " + players.teamName + " team:")
@@ -42,7 +46,19 @@ class Renderer {
     $playerCard.toggleClass("flipped")
   }
   renderPlayerStats($player, stats) {
-    const newHTML = this.getTemplatedHTML(this.view.$statsTemplate, stats)
+    $player.find(".flip-card-back").empty()
+    if ($player.hasClass("empty")) {
+      $player.removeClass("empty")
+    }
+
+    let newHTML = {}
+    if (stats instanceof Object) {
+      newHTML = this.getTemplatedHTML(this.view.$statsTemplate, stats)
+    } else {
+      newHTML = this.getTemplatedHTML(this.view.$emptyStatsTemplate, {})
+      $player.find(".flip-card-back").addClass("empty")
+    }
+    
     $player.find(".flip-card-back").append(newHTML)
     this.renderFlipCardBack($player)
   }
@@ -50,9 +66,12 @@ class Renderer {
     const empty = {
       title: "No players were found for team",
       teamName: searchedName,
-      subTitle: "Please check your spelling",
+      subTitle: "Please check your spelling or search for another team",
     }
-    const newHTML = this.getTemplatedHTML(this.view.$emptyStateTemplate, empty)
+    const newHTML = this.getTemplatedHTML(this.view.$emptyTeamTemplate, empty)
+    this.view.$playersContainer.empty()
+    this.view.$shownTeamHeader.text(null)
+    this.view.$playersContainer.addClass("empty")
     this.view.$playersContainer.append(newHTML)
   }
 }

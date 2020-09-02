@@ -19,8 +19,8 @@
   grid-template-columns: 0.1fr 20fr 4fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
-  "i input btn"
-  "t t t";
+    "i input btn"
+    "t t t";
   padding: 10px;
 }
 
@@ -44,12 +44,12 @@
 }
 
 #team-name-input:hover {
-  background-color: rgba(218, 120, 29, 0.116);
+  background-color: rgb(248, 242, 236);
   outline: none;
 }
 
 #team-name-input:focus {
-  background-color: rgba(218, 120, 29, 0.116);
+  background-color: rgb(248, 242, 236);
   outline: none;
 }
 
@@ -69,7 +69,7 @@ input.alerted {
 }
 
 #search-bar > i {
-    grid-area: i;
+  grid-area: i;
   width: auto;
   height: auto;
   display: none;
@@ -91,7 +91,7 @@ input.alerted {
   outline: none;
 }
 #search-bar > button:hover {
-  background-color: rgba(218, 120, 29, 0.527);
+  background-color: rgba(218, 120, 29, 0.3);
   outline: none;
 }
 
@@ -102,10 +102,10 @@ input.alerted {
   outline: none;
 }
 
-#shown-team{
-    grid-area: t;
-    text-align: center;
-    font-weight: bold;
+#shown-team {
+  grid-area: t;
+  text-align: center;
+  font-weight: bold;
 }
 
 #players-container {
@@ -130,19 +130,18 @@ input.alerted {
   transform-style: preserve-3d;
   text-align: center;
   display: flex;
-  background-color: rgb(218, 120, 29);
   border: solid 1px black;
   border-radius: 5px;
   perspective: 1000px;
   box-shadow: 1px 1px 1px 1px black;
 }
 
-.player.flpped {
+/* .player.flpped {
   -webkit-transform: rotateY(180deg);
   -moz-transform: rotateY(180deg);
   -o-transform: rotateY(180deg);
   transform: rotateY(180deg);
-}
+} */
 
 .player.flipped .flip-card-inner {
   transform: rotateY(180deg);
@@ -161,6 +160,7 @@ input.alerted {
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
   text-align: center;
+  background-color: rgb(218, 120, 29);
 }
 
 .flip-card-front {
@@ -180,34 +180,34 @@ input.alerted {
   overflow: scroll;
 }
 
-.statistics-header{
+.statistics-header {
   display: grid;
   grid-template-columns: 1fr 10fr;
   padding: 10px;
 }
 
-.statistics-header i{
-    grid-column: 1;
-    color: black;
-    cursor: pointer;
-    height: 100%;
-    width: 100%;
+.statistics-header .go-back {
+  grid-column: 1;
+  color: black;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
 }
 
-.statistics-header i:hover{
-    color: white
+.statistics-header .go-back:hover {
+  color: white;
 }
 
-.statistics-header h4{
-    grid-column: 2;
-    margin: 0;
+.statistics-header h4 {
+  grid-column: 2;
+  margin: 0;
 }
 
-.flip-card-back .stats{
-    margin: 10px;
-    font-size: small;
-    text-align: left;
-  }
+.flip-card-back .stats {
+  margin: 10px;
+  font-size: small;
+  text-align: left;
+}
 
 .flip-card-back span {
   color: white;
@@ -226,7 +226,7 @@ input.alerted {
 }
 .player-headshot {
   grid-row: 3;
-  background-color: rgb(235, 229, 223);
+  background-color: rgb(248, 242, 236);
   margin-left: 10px;
   margin-right: 10px;
   box-shadow: 1px 2px 1px black;
@@ -274,8 +274,29 @@ button.showStats {
   outline: none;
 }
 
-.empty-state{
-    color: rgb(218, 120, 29);
-    font-weight: bold;
-    align-content: center;
+#players-container>.empty-state {
+  text-align: center;
+  background-color: rgb(248, 242, 236);
+  padding: 5%;
+  max-height: fit-content;
 }
+
+#players-container>.empty-state > h1 {
+  color: rgb(218, 120, 29);
+  font-weight: bold;
+}
+
+#players-container>.empty-state > h1 > span {
+  color: rgb(0, 158, 158);
+}
+
+.empty {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+/* .flip-card-back .empty-state .fa-grin-beam-sweat{
+grid-column: 2;
+margin: ;
+} */

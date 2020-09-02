@@ -55,7 +55,7 @@
     </script>
     <script id="stats-template" type="text/x-handlebars-template">
       <div class="statistics-header">
-        <i class="fas fa-chevron-left"></i>
+        <i class="fas fa-chevron-left go-back"></i>
         <h4>
           {{data.name}}'s statistics:
         </h4>
@@ -157,10 +157,22 @@
         </span>{{data.player_efficiency_rating}}
       </div>
     </script>
-    <script id="empty-state-template" type="text/x-handlebars-template">
-      <i class="fas fa-basketball-ball"></i><br>
-      <h1 class="empty-state">{{data.title}} <span>{{data.teamName}}</span></h1>
-      <br><h3>{{data.subTitle}}</h3>
+    <script id="empty-stats-template" type="text/x-handlebars-template">
+      <div class="empty-state">
+        <div class="statistics-header">
+          <i class="fas fa-chevron-left go-back"></i>
+        </div>
+        <h4>
+          Couldn't get this player's statistics
+        </h4>
+          <i class="far fa-grin-beam-sweat fa-4x"></i>
+      </div>
+  </script>
+    <script id="empty-team-template" type="text/x-handlebars-template">
+      <div class="empty-state">
+      <i class="fas fa-basketball-ball fa-10x"></i><br>
+      <h1>{{data.title}} <span>"{{data.teamName}}"</span></h1>
+      <br><h3>{{data.subTitle}}</h3></div>
   </script>
     <script src="/scripts/handlebars/dist/handlebars.js"></script>
     <script src="/scripts/jquery/dist/jquery.js"></script>
