@@ -150,12 +150,12 @@ button.dream-team {
   box-shadow: 1px 1px 1px 1px black;
 }
 
-/* .player.flpped {
+.player.flpped {
   -webkit-transform: rotateY(180deg);
   -moz-transform: rotateY(180deg);
   -o-transform: rotateY(180deg);
   transform: rotateY(180deg);
-} */
+}
 
 .player.flipped .flip-card-inner {
   transform: rotateY(180deg);
@@ -273,6 +273,7 @@ button.dream-team {
   margin-right: 10px;
   box-shadow: 1px 2px 1px black;
   position: relative;
+  height: 300px;
 }
 .player img {
   display: block;
@@ -280,6 +281,15 @@ button.dream-team {
   width: auto;
   position: absolute;
   bottom: 0;
+}
+
+.img-not-found{
+  max-height: 100%;
+  opacity: 0.4;
+  width: 80% !important;
+  position: relative !important;
+  margin-top: 20%;
+  margin-left: 10%;
 }
 
 .player-headshot:hover .overlay {
@@ -343,6 +353,7 @@ button.showStats:active {
   align-content: center;
   justify-content: center;
   text-align: center;
+  padding: 10px;
 }
 
 .modal {
@@ -404,7 +415,7 @@ button.showStats:active {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
+  grid-gap: 30px;
 }
 
 .player-dream-team {
@@ -414,6 +425,7 @@ button.showStats:active {
   position: relative;
   display: grid;
   grid-template-columns: 5fr 4fr;
+  margin-top: 20px;
 }
 
 .player-dream-team>img{

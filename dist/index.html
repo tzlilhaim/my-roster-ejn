@@ -61,7 +61,7 @@
                 {{jersey}}
               </div>
               <div class="player-headshot">
-                <img src={{headshotUrl}} alt=""/>
+                <img src={{headshotUrl}} onerror="this.onerror=null;this.src='assets/nba-logo.png';this.className='img-not-found';">
                 <div class="overlay"></div>
                 <button class="showStats">
                   show stats
@@ -225,7 +225,8 @@
         <div
           class="player-dream-team"
           data-firstName={{firstName}}
-          data-lastName={{lastName}}>
+          data-lastName={{lastName}}
+        >
           <p class="dt-player-name">
             {{firstName}} {{lastName}}
           </p>
