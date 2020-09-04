@@ -41,7 +41,7 @@
     <script id="player-template" type="text/x-handlebars-template">
       {{#each data}}
         <div
-          class="player"
+          class='player {{#if isStarred}}starred{{/if}}'
           data-firstName={{firstName}}
           data-lastName={{lastName}}
         >
@@ -61,7 +61,7 @@
                 {{jersey}}
               </div>
               <div class="player-headshot">
-                <img src={{headshotUrl}} />
+                <img src={{headshotUrl}} alt=""/>
                 <div class="overlay"></div>
                 <button class="showStats">
                   show stats

@@ -27,7 +27,7 @@ class Renderer {
     this.view.$playersContainer.empty()
     const newHTML = this.getTemplatedHTML(
       this.view.$playersTemplate,
-      players.team
+      players.teammates
     )
     if (this.view.$playersContainer.hasClass("empty")) {
       this.view.$playersContainer.removeClass("empty")

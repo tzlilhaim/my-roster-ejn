@@ -5,7 +5,7 @@ const getRoster = function () {
   if ($input.val().length) {
     $.get(`/teams/${$input.val()}`, function (data) {
       $input.val(null)
-      if (data.team.length) {
+      if (data.teammates.length) {
         renderer.renderPlayers(data)
       } else {
         renderer.renderEmptyState(data.teamName)
@@ -82,7 +82,7 @@ $("#players-container").on("click", ".fa-star", function () {
 $(window).scroll(function () {
   let scroll = $(window).scrollTop()
 
-  if (scroll >= 100) {
+  if (scroll > 100) {
     $("#search-bar").addClass("sticky")
   } else {
     $("#search-bar").removeClass("sticky")

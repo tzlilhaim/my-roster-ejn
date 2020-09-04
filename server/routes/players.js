@@ -1,6 +1,7 @@
 const request = require("request")
 
-const getHeadshot = function (lastName, firstName) {
+
+getHeadshot = function (lastName, firstName) {
   return `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`
 }
 
@@ -18,4 +19,4 @@ const getStats = function (player, res) {
   )
 }
 
-module.exports = { getHeadshot, getStats }
+module.exports = { getHeadshot, getStats}
