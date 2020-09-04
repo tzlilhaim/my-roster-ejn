@@ -80,7 +80,7 @@ input.alerted {
   color: red;
 }
 
-#search-bar > button {
+#search-bar button {
   display: block;
   font-family: "Graduate", cursive;
   cursor: pointer;
@@ -89,12 +89,12 @@ input.alerted {
   max-height: 100px;
   outline: none;
 }
-#search-bar > button:hover {
+#search-bar button:hover {
   background-color: rgba(218, 120, 29, 0.3);
   outline: none;
 }
 
-#search-bar > button:active {
+#search-bar button:active {
   background-color: rgb(218, 120, 29);
   color: white;
   border: none;
@@ -283,7 +283,7 @@ button.dream-team {
   bottom: 0;
 }
 
-.img-not-found{
+.img-not-found {
   max-height: 100%;
   opacity: 0.4;
   width: 80% !important;
@@ -375,9 +375,14 @@ button.showStats:active {
   margin: 15% auto;
   padding: 20px;
   width: 80%;
-  height: auto;
+  height: fit-content;
   max-height: 80%;
+  overflow: scroll;
   text-align: center;
+}
+
+#dream-team-container>h1{
+  margin-bottom: 50px;
 }
 
 .close {
@@ -391,9 +396,6 @@ button.showStats:active {
 .close:active {
   color: rgb(218, 120, 29);
   cursor: pointer;
-}
-#dream-team-players {
-  padding: 20px;
 }
 
 #dream-team-players .empty-state > i {
@@ -411,6 +413,7 @@ button.showStats:active {
 }
 
 #dream-team-players {
+  padding: 20px;
   height: 100%;
   width: 100%;
   display: grid;
@@ -424,21 +427,55 @@ button.showStats:active {
   padding: 10px;
   position: relative;
   display: grid;
-  grid-template-columns: 5fr 4fr;
-  margin-top: 20px;
+  grid-template-columns: 5fr 4fr 1fr;
+  margin-top: 50px;
+  grid-gap: 5%;
 }
 
-.player-dream-team>img{
+.player-dream-team > ul {
+  grid-column: 1;
+}
+
+.player-dream-team > img {
   grid-column: 2;
   position: absolute;
   bottom: 0;
-  right: 0;
-  width: 100%;
+  width: 80%;
+  max-width: 450px;
 }
-.player-dream-team>ul{
-  grid-column: 1;
+
+.remove-player-dt {
+  z-index: 1;
+  grid-column: 3;
+  grid-row: 1;
+  max-height: 50px;
+  padding: 5px;
+  height: fit-content;
+  width: fit-content;
+  font-family: "Graduate", cursive;
+  font-size: small;
+  background-color: transparent;
+  outline: none;
+  border: none;
 }
-.player-dream-team>p{
+
+.remove-player-dt:hover{
+  color: rgb(218, 120, 29);
+  cursor: pointer;
+}
+
+.remove-player-dt:active{
+  color:white;
+  background-color: rgb(218, 120, 29);
+  cursor: pointer;
+}
+
+.player-dream-team > p {
   font-weight: bold;
   color: rgb(218, 120, 29);
+}
+
+.player-dream-team .img-not-found{
+  margin:0;
+  margin-bottom: 20px;
 }

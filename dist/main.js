@@ -78,6 +78,25 @@ $("#players-container").on("click", ".fa-star", function () {
   })
 })
 
+$("#dream-team-players").on("click",".remove-player-dt",function(){
+  $dreamPlayer = $(this).closest(".player-dream-team")
+  const firstName = $dreamPlayer.attr("data-firstName")
+  const lastName = $dreamPlayer.attr("data-lastName")
+  
+  $.ajax({
+    url: `/roster`,
+    type: "DELETE",
+    data: { firstName: firstName, lastName: lastName },
+    success: function () {
+      const $player = $(`.player[data-firstName='${firstName}']`)
+      if(($player).length){
+        $player.removeClass("starred")
+      }
+      openDreamTeamModal()
+    }
+  })
+})
+
 // Make search bar sticky on scroll
 $(window).scroll(function () {
   let scroll = $(window).scrollTop()

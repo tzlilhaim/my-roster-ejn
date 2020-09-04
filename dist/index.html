@@ -238,7 +238,9 @@
               Position: {{pos}}
             </li>
           </ul>
-          <img src={{headshotUrl}} />
+          <img src={{headshotUrl}} onerror="this.onerror=null;this.src='assets/nba-logo.png';this.className='img-not-found';">
+          <button class="remove-player-dt">
+            <i class="fas fa-user-slash"></i> remove</button>
         </div>
       {{/each}}
     </script>
