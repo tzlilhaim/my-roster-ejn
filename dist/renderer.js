@@ -36,14 +36,13 @@ class Renderer {
 
     this.view.$shownTeamHeader.text("The " + players.teamName + " team:")
   }
-  renderAlertedInput() {
-    const $input = $("#team-name-input")
-    const $alertIcon = $("#search-bar>i")
+  renderAlertedInput($input) {
+    const $alertIcon = $input.siblings("i")
     $input.addClass("alerted")
-    $alertIcon.addClass("alerted")
+    $alertIcon ? $alertIcon.addClass("alerted") : null
     setTimeout(function () {
       $input.removeClass("alerted")
-      $alertIcon.removeClass("alerted")
+      $alertIcon ? $alertIcon.removeClass("alerted") : null
     }, 3000)
   }
   renderFlipCardBack($playerCard) {
@@ -105,11 +104,11 @@ class Renderer {
   }
   renderPopupDreamTeam(data) {
     this.view.$popupDreamTeamModal.empty()
-    let newHTML ={}
-    if(data.isSuccess){
-      newHTML = this.getTemplatedHTML(this.view.$successDreamTeamTemplate,data)
-    }else{
-      newHTML = this.getTemplatedHTML(this.view.$failureDreamTeamTemplate,data)
+    let newHTML = {}
+    if (data.isSuccess) {
+      newHTML = this.getTemplatedHTML(this.view.$successDreamTeamTemplate, data)
+    } else {
+      newHTML = this.getTemplatedHTML(this.view.$failureDreamTeamTemplate, data)
     }
 
     this.view.$popupDreamTeamModal.append(newHTML)
@@ -117,6 +116,6 @@ class Renderer {
     $modal.css("display", "block")
     setTimeout(function () {
       $modal.css("display", "none")
-    }, 2500)
+    }, 3000)
   }
 }

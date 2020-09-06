@@ -3,13 +3,13 @@ const player = require("./players")
 
 class Player {
   constructor(playerData) {
-    ;(this.firstName = playerData.firstName),
-      (this.lastName = playerData.lastName),
-      (this.jersey = playerData.jersey),
-      (this.headshotUrl = playerData.headshotUrl),
-      (this.pos = playerData.pos),
-      (this.isStarred = playerData.isStarred),
-      (this.team = playerData.team)
+    this.firstName = playerData.firstName
+    this.lastName = playerData.lastName
+    this.jersey = playerData.jersey
+    this.headshotUrl = playerData.headshotUrl
+    this.pos = playerData.pos
+    this.isStarred = playerData.isStarred
+    this.team = playerData.team
   }
 }
 
@@ -71,7 +71,7 @@ const getTeam = function (year, teamName, res) {
   // Get already-stored data if exists, request from api otherwise
   const existingDataForTeam = db.getTeamPlayers(teamName)
   if (existingDataForTeam.length) {
-    res.send({teamName: teamName, teammates:existingDataForTeam})
+    res.send({ teamName: teamName, teammates: existingDataForTeam })
   } else {
     request(`http://data.nba.net/10s/prod/v1/${year}/players.json`, function (
       error,
@@ -127,7 +127,7 @@ const addToDreamTeam = function (firstName, lastName, res) {
       db.updateDreamTeam()
 
       message = {
-        title: `Addded '${firstName} ${lastName} to the dream team!'`,
+        title: `addded '${firstName} ${lastName}' to the dream team!`,
         dreamTeam: db.getDreamTeamPlayers(),
         method: "post",
         isSuccess: true,
@@ -149,7 +149,7 @@ const removeFromDreamTeam = function (firstName, lastName, res) {
   db.updateDreamTeam()
 
   res.send({
-    title: `Removed '${firstName} ${lastName} from the dream team!'`,
+    title: `removed '${firstName} ${lastName}' from the dream team!`,
     dreamTeam: db.getDreamTeamPlayers(),
     method: "delete",
     isSuccess: true,

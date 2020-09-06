@@ -223,24 +223,40 @@
     <script id="dream-team-template" type="text/x-handlebars-template">
       {{#each data}}
         <div
-          class="player-dream-team"
-          data-firstName={{firstName}}
-          data-lastName={{lastName}}
-        >
-          <p class="dt-player-name">
-            {{firstName}} {{lastName}}
-          </p>
-          <ul>
-            <li class="dt-player-jersey">
-              Jersey: {{jersey}}
-            </li>
-            <li class="dt-player-pos">
-              Position: {{pos}}
-            </li>
-          </ul>
-          <img src={{headshotUrl}} onerror="this.onerror=null;this.src='assets/nba-logo.png';this.className='img-not-found';">
-          <button class="remove-player-dt">
-            <i class="fas fa-user-slash"></i> remove</button>
+          class="player-dream-team {{#if nickname}} has-nickname{{/if}}"
+          data-nickname="{{nickname}}"
+          data-firstName="{{firstName}}"
+          data-lastName="{{lastName}}">
+          <div class="info">
+            <p class="dt-player-name">
+              {{firstName}} {{lastName}}
+            </p>
+            <div class="nickname-container">
+            <div class="give-dt-nickname">
+              <input type="text" placeholder="Give nickname" />
+              <button>save</button>
+            </div>
+            <div class="nickname"><p>"{{nickname}}"</p><span class="close">&times;</span></div>
+            </div>
+            <ul>
+              <li class="dt-player-jersey">
+                Jersey: {{jersey}}
+              </li>
+              <li class="dt-player-pos">
+                Position: {{pos}}
+              </li>
+            </ul>
+          </div>
+          <img
+            src={{headshotUrl}}
+            onerror="this.onerror=null;this.src='assets/nba-logo.png';this.className='img-not-found';"
+          />
+          <div class="remove-player-dt">
+            <button>
+              <i class="fas fa-user-slash"></i>
+              remove
+            </button>
+          </div>
         </div>
       {{/each}}
     </script>
@@ -259,7 +275,8 @@
     </script>
     <script src="/scripts/handlebars/dist/handlebars.js"></script>
     <script src="/scripts/jquery/dist/jquery.js"></script>
-    <script src="./renderer.js"></script>
+    <script src="./Renderer.js"></script>
+    <script src="./LSManager.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>

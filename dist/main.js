@@ -1,4 +1,5 @@
 const renderer = new Renderer()
+const localStorageManager = new LocalStorageManager()
 
 const getRoster = function () {
   const $input = $("#team-name-input")
@@ -12,7 +13,7 @@ const getRoster = function () {
       }
     })
   } else {
-    renderer.renderAlertedInput()
+    renderer.renderAlertedInput($input)
   }
 }
 
@@ -40,11 +41,17 @@ $("#players-container").on("click", ".statistics-header>.go-back", function () {
 
 const openDreamTeamModal = function () {
   $.get(`/dreamTeam`, function (data) {
+    if (data.length) {
+      data.forEach((player) => {
+        const nickname = localStorageManager.checkForExistingNickname(player.firstName,player.lastName)
+        player["nickname"] = nickname
+      })
+    }
     renderer.renderDreamTeam(data)
   })
 }
 
-$("#dream-team-modal").on("click", "span.close", function () {
+$("#dream-team-modal").on("click", "#dream-team-container>span.close", function () {
   renderer.closeDreamTeam()
 })
 
@@ -65,7 +72,6 @@ $("#players-container").on("click", ".fa-star", function () {
     type: method,
     data: { firstName: firstName, lastName: lastName },
     success: function (data) {
-
       if (data.isSuccess) {
         if (data["method"] === "delete") {
           $player.removeClass("starred")
@@ -78,23 +84,47 @@ $("#players-container").on("click", ".fa-star", function () {
   })
 })
 
-$("#dream-team-players").on("click",".remove-player-dt",function(){
-  $dreamPlayer = $(this).closest(".player-dream-team")
+$("#dream-team-players").on("click", ".remove-player-dt", function () {
+  const $dreamPlayer = $(this).closest(".player-dream-team")
   const firstName = $dreamPlayer.attr("data-firstName")
   const lastName = $dreamPlayer.attr("data-lastName")
-  
+
   $.ajax({
     url: `/roster`,
     type: "DELETE",
     data: { firstName: firstName, lastName: lastName },
     success: function () {
       const $player = $(`.player[data-firstName='${firstName}']`)
-      if(($player).length){
+      if ($player.length) {
         $player.removeClass("starred")
       }
       openDreamTeamModal()
-    }
+    },
   })
+})
+
+$("#dream-team-players").on("click", ".give-dt-nickname>button", function () {
+  const $input = $(this).closest(".give-dt-nickname").find("input")
+  
+  if ($input.val().length) {
+    const $dreamPlayer = $(this).closest(".player-dream-team")
+  const firstName = $dreamPlayer.attr("data-firstName")
+  const lastName = $dreamPlayer.attr("data-lastName")
+  localStorageManager.saveNewNickname(firstName,lastName,$input.val())
+  
+    $input.val(null)
+    openDreamTeamModal()
+  } else {
+    renderer.renderAlertedInput($input)
+  }
+})
+
+$("#dream-team-players").on("click", ".nickname>span.close", function () {
+    const $dreamPlayer = $(this).closest(".player-dream-team")
+    const firstName = $dreamPlayer.attr("data-firstName")
+  const lastName = $dreamPlayer.attr("data-lastName")
+    localStorageManager.deleteNickname(firstName,lastName, nicknames)
+    openDreamTeamModal()
 })
 
 // Make search bar sticky on scroll
