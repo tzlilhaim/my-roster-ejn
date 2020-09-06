@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Roster - NBA</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Graduate&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="search-bar">
+        <i class="fa fa-exclamation-circle fa-lg"></i>
+        <input type="text" id="team-name-input" placeholder="Enter team name" />
+        <button id="search-team" onclick="getRoster()">
+          <i class="fas fa-search"></i> Get Roster
+        </button>
+        <button class="dream-team" onclick="openDreamTeamModal()">
+          <i class="far fa-star"></i> Dream Team
+        </button>
+        <div id="shown-team"></div>
+      </div>
+      <div id="players-container"></div>
+    </div>
+    <div id="dream-team-modal" class="modal" class="dream-team">
+      <div id="dream-team-container">
+        <span class="close">&times;</span>
+        <h1>My dream team:</h1>
+        <div id="dream-team-players"></div>
+      </div>
+    </div>
+    <div class="modal" class="dream-team">
+      <div>
+        <div id="popup-modal"></div>
+      </div>
+    </div>
+    <script id="player-template" type="text/x-handlebars-template">
+      {{#each data}}
+        <div
+          class='player {{#if isStarred}}starred{{/if}}'
+          data-firstName={{firstName}}
+          data-lastName={{lastName}}
+        >
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="player-card-header">
+                <div class="player-name">
+                  {{firstName}} {{lastName}}
+                </div>
+                <i
+                  class="far fa-star fa-2x"
+                  onmouseover="this.className = 'fas fa-star fa-2x'"
+                  onmouseout="this.className = 'far fa-star fa-2x'"
+                ></i>
+              </div>
+              <div class="player-jersey">
+                {{jersey}}
+              </div>
+              <div class="player-headshot">
+                <img src={{headshotUrl}} onerror="this.onerror=null;this.src='assets/nba-logo.png';this.className='img-not-found';">
+                <div class="overlay"></div>
+                <button class="showStats">
+                  show stats
+                </button>
+              </div>
+              <div class="player-pos">
+                {{pos}}
+              </div>
+            </div>
+            <div class="flip-card-back"></div>
+          </div>
+        </div>
+      {{/each}}
+    </script>
+    <script id="stats-template" type="text/x-handlebars-template">
+      <div class="statistics-header">
+        <i class="fas fa-chevron-left go-back"></i>
+        <h4>
+          {{data.name}}'s statistics:
+        </h4>
+      </div>
+      <div class="stats">
+        <span>
+          Team Name:
+        </span>{{data.team_name}}
+      </div>
+      <div class="stats">
+        <span>
+          Games played:
+        </span>{{data.games_played}}
+      </div>
+      <div class="stats">
+        <span>
+          Minutes per game:
+        </span>{{data.minutes_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Field goal attempted per game:
+        </span>{{data.field_goals_attempted_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Field goals made per game:
+        </span>{{data.field_goals_made_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Field goal precentage:
+        </span>{{data.field_goal_percentage}}
+      </div>
+      <div class="stats">
+        <span>
+          Field throw percentage:
+        </span>{{data.free_throw_percentage}}
+      </div>
+      <div class="stats">
+        <span>
+          Three point attempted per game:
+        </span>{{data.three_point_attempted_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Three point made per game:
+        </span>{{data.three_point_made_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Three point percentage:
+        </span>{{data.three_point_percentage}}
+      </div>
+      <div class="stats">
+        <span>
+          Points per game:
+        </span>
+        {{data.points_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Offensive rebounds per game:
+        </span>{{data.offensive_rebounds_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Defensive rebounds per game:
+        </span>{{data.defensive_rebounds_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Rebounds per game:
+        </span>{{data.rebounds_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Assists per game:
+        </span>{{data.assits_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Steals per game:
+        </span>{{data.steals_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Blocks per game:
+        </span>{{data.blocks_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Turnovers per game:
+        </span>{{data.turnovers_per_game}}
+      </div>
+      <div class="stats">
+        <span>
+          Player efficiency rating:
+        </span>{{data.player_efficiency_rating}}
+      </div>
+    </script>
+    <script id="empty-stats-template" type="text/x-handlebars-template">
+      <div class="empty-state">
+        <div class="statistics-header">
+          <i class="fas fa-chevron-left go-back"></i>
+        </div>
+        <h4>
+          Couldn't get this player's statistics
+        </h4>
+        <i class="far fa-grin-beam-sweat fa-4x"></i>
+      </div>
+    </script>
+    <script id="empty-team-template" type="text/x-handlebars-template">
+      <div class="empty-state">
+        <i class="fas fa-basketball-ball fa-8x"></i>
+        <br />
+        <h1>
+          {{data.title}}
+          <span>
+            "{{data.teamName}}"
+          </span>
+        </h1>
+        <br />
+        <h3>
+          {{data.subTitle}}
+        </h3>
+      </div>
+    </script>
+    <script id="dream-team-empty-template" type="text/x-handlebars-template">
+      <div class="empty-state">
+        <i class="fas fa-basketball-ball fa-8x"></i>
+        <br />
+        <h1>
+          {{data.title}}
+        </h1>
+        <br />
+        <h3>
+          {{data.subTitle}}
+        </h3>
+      </div>
+    </script>
+    <script id="dream-team-template" type="text/x-handlebars-template">
+      {{#each data}}
+        <div
+          class="player-dream-team {{#if nickname}} has-nickname{{/if}}"
+          data-nickname="{{nickname}}"
+          data-firstName="{{firstName}}"
+          data-lastName="{{lastName}}">
+          <div class="info">
+            <p class="dt-player-name">
+              {{firstName}} {{lastName}}
+            </p>
+            <div class="nickname-container">
+            <div class="give-dt-nickname">
+              <input type="text" placeholder="Give nickname" />
+              <button>save</button>
+            </div>
+            <div class="nickname"><p>"{{nickname}}"</p><span class="close">&times;</span></div>
+            </div>
+            <ul>
+              <li class="dt-player-jersey">
+                Jersey: {{jersey}}
+              </li>
+              <li class="dt-player-pos">
+                Position: {{pos}}
+              </li>
+            </ul>
+          </div>
+          <img
+            src={{headshotUrl}}
+            onerror="this.onerror=null;this.src='assets/nba-logo.png';this.className='img-not-found';"
+          />
+          <div class="remove-player-dt">
+            <button>
+              <i class="fas fa-user-slash"></i>
+              remove
+            </button>
+          </div>
+        </div>
+      {{/each}}
+    </script>
+    <script id="success-dream-team-template" type="text/x-handlebars-template">
+      <h1>
+        Successfully {{data.title}}
+      </h1>
+    </script>
+    <script id="failure-dream-team-template" type="text/x-handlebars-template">
+      <h1>
+        {{data.title}}
+      </h1>
+      <h3>
+        {{data.subTitle}}
+      </h3>
+    </script>
+    <script src="/scripts/handlebars/dist/handlebars.js"></script>
+    <script src="/scripts/jquery/dist/jquery.js"></script>
+    <script src="./Renderer.js"></script>
+    <script src="./LSManager.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>

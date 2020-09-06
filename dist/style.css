@@ -1,0 +1,559 @@
+* {
+  box-sizing: border-box;
+}
+#container {
+  height: 100vh;
+  width: 100vw;
+  font-family: "Graduate", cursive;
+  display: grid;
+  padding: 10px;
+  grid-template-rows: 1fr 10fr;
+}
+
+#search-bar {
+  grid-row: 1;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 0.1fr 15fr 5fr 5fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "i input search dreamTeam"
+    "t t t t";
+  padding: 10px;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.829);
+  box-shadow: 5px 5px 5px rgba(116, 60, 8, 0.7);
+  z-index: 1;
+}
+
+#team-name-input {
+  grid-area: input;
+}
+
+input {
+  text-indent: 20px;
+  padding: 10px;
+  width: 100%;
+  font-family: "Graduate", cursive;
+  border: solid 2px rgba(218, 120, 29, 0.527);
+  max-height: 100px;
+}
+
+input:hover {
+  background-color: rgb(248, 242, 236);
+  outline: none;
+}
+
+input:focus {
+  background-color: rgb(248, 242, 236);
+  outline: none;
+}
+
+input.alerted {
+  border: solid 2px red !important;
+  position: relative;
+  animation: shake 0.1s linear;
+  animation-iteration-count: 3;
+}
+@keyframes shake {
+  0% {
+    left: -5px;
+  }
+  100% {
+    right: -5px;
+  }
+}
+
+#search-bar > i {
+  grid-area: i;
+  width: auto;
+  height: auto;
+  display: none;
+}
+
+#search-bar > i.alerted {
+  display: inline-block;
+  color: red;
+}
+
+#search-bar button {
+  display: block;
+  font-family: "Graduate", cursive;
+  cursor: pointer;
+  background-color: white;
+  border: solid 2px rgba(218, 120, 29, 0.527);
+  max-height: 100px;
+  outline: none;
+}
+#search-bar button:hover {
+  background-color: rgba(218, 120, 29, 0.3);
+  outline: none;
+}
+
+#search-bar button:active {
+  background-color: rgb(218, 120, 29);
+  color: white;
+  border: none;
+  outline: none;
+}
+
+#shown-team {
+  grid-area: t;
+  text-align: center;
+  font-weight: bold;
+}
+
+button.dream-team {
+  grid-area: dreamTeam;
+}
+
+#search-team {
+  grid-area: search;
+}
+
+@media only screen and (max-width: 740px) {
+  #search-bar i {
+    display: none;
+  }
+}
+
+#players-container {
+  grid-row: 2;
+  display: grid;
+  grid-gap: 10px;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-rows: repeat(auto, 1fr);
+}
+
+.player {
+  color: black;
+  background-color: transparent;
+}
+
+.flip-card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  text-align: center;
+  display: flex;
+  border: solid 1px black;
+  border-radius: 5px;
+  perspective: 1000px;
+  box-shadow: 1px 1px 1px 1px black;
+}
+
+.player.flpped {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.player.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.player.flipped .player-headshot {
+  display: none;
+}
+
+.flip-card-front,
+.flip-card-back {
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  text-align: center;
+  background-color: rgb(218, 120, 29);
+}
+
+.player.starred .flip-card-front {
+  background-color: rgb(204, 172, 68);
+}
+.player.starred .flip-card-back {
+  background-color: rgb(204, 172, 68);
+}
+
+.flip-card-front {
+  display: grid;
+  grid-template-rows: 1fr 1fr 8fr 1fr;
+  padding: 5px;
+}
+
+.flip-card-back {
+  display: grid;
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  position: absolute;
+  overflow: scroll;
+}
+
+.statistics-header {
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  padding: 10px;
+}
+
+.statistics-header .go-back {
+  grid-column: 1;
+  color: black;
+  height: 100%;
+  width: 100%;
+}
+
+.statistics-header .go-back:hover,
+.statistics-header .go-back:active {
+  color: white;
+  cursor: pointer;
+}
+
+.statistics-header h4 {
+  grid-column: 2;
+  margin: 0;
+}
+
+.flip-card-back .stats {
+  margin: 10px;
+  font-size: small;
+  text-align: left;
+}
+
+.flip-card-back span {
+  color: white;
+}
+
+.player-card-header {
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+
+.player-name {
+  grid-column: 1;
+  font-weight: bold;
+  font-size: large;
+}
+.player-card-header > i.fa-star {
+  grid-column: 2;
+  color: yellow;
+  justify-self: end;
+  cursor: pointer;
+}
+
+.player-card-header > i.fa-star:active {
+  color: rgb(194, 164, 29);
+  cursor: pointer;
+}
+
+.player-jersey {
+  grid-row: 2;
+}
+
+.player-pos {
+  grid-row: 4;
+  padding: 5px;
+}
+.player-headshot {
+  grid-row: 3;
+  background-color: rgb(248, 242, 236);
+  margin-left: 10px;
+  margin-right: 10px;
+  box-shadow: 1px 2px 1px black;
+  position: relative;
+  height: 300px;
+}
+.player img {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  position: absolute;
+  bottom: 0;
+}
+
+.img-not-found {
+  max-height: 100%;
+  opacity: 0.4;
+  width: 80% !important;
+  position: relative !important;
+  margin-top: 20%;
+  margin-left: 10%;
+}
+
+.player-headshot:hover .overlay {
+  display: block;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.player-headshot:hover button {
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease;
+}
+
+button.showStats {
+  display: none;
+  text-align: center;
+  color: white;
+  border: solid 2px white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0);
+  background-color: rgba(0, 0, 0, 0);
+  padding: 10px;
+  cursor: pointer;
+  font-family: "Graduate", cursive;
+  outline: none;
+}
+
+button.showStats:active {
+  background-color: rgb(218, 120, 29);
+}
+
+#players-container > .empty-state {
+  text-align: center;
+  background-color: rgb(248, 242, 236);
+  padding: 5%;
+  max-height: fit-content;
+}
+
+#players-container > .empty-state > h1 {
+  color: rgb(218, 120, 29);
+  font-weight: bold;
+}
+
+#players-container > .empty-state > h1 > span {
+  color: rgb(0, 158, 158);
+}
+
+.empty {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+  font-family: "Graduate", cursive;
+}
+
+#dream-team-container {
+  background-color: rgb(248, 242, 236);
+  margin: 15% auto;
+  padding: 20px;
+  width: 80%;
+  height: fit-content;
+  max-height: 80%;
+  overflow: scroll;
+  text-align: center;
+}
+
+#dream-team-container > h1 {
+  margin-bottom: 50px;
+}
+
+.close {
+  color: black;
+  float: right;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:active {
+  color: rgb(218, 120, 29);
+  cursor: pointer;
+}
+
+#dream-team-players .empty-state > i {
+  color: rgb(218, 120, 29);
+}
+
+#popup-modal {
+  background-color: rgb(248, 242, 236);
+  margin: 15% auto;
+  padding: 20px;
+  width: 80%;
+  height: auto;
+  max-height: 80%;
+  text-align: center;
+}
+
+#dream-team-players {
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  grid-gap: 30px;
+}
+
+.player-dream-team {
+  text-align: left;
+  border: solid 1px rgb(218, 120, 29);
+  padding: 10px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 5fr 4fr 1fr;
+  margin-top: 50px;
+  grid-gap: 5%;
+}
+
+.player-dream-team > img {
+  grid-column: 2;
+  position: absolute;
+  bottom: 0;
+  width: 80%;
+  max-width: 400px;
+}
+
+.remove-player-dt {
+  grid-column: 3;
+}
+
+.player-dream-team button {
+  z-index: 1;
+  max-height: 50px;
+  padding: 5px;
+  height: fit-content;
+  width: fit-content;
+  font-family: "Graduate", cursive;
+  font-size: small;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  align-self: right;
+}
+
+.player-dream-team button:hover {
+  color: rgb(218, 120, 29);
+  cursor: pointer;
+}
+
+.player-dream-team button:active {
+  color: white;
+  background-color: rgb(218, 120, 29);
+  cursor: pointer;
+}
+
+.player-dream-team .info {
+  grid-column: 1;
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr;
+}
+
+.player-dream-team .info > p {
+  grid-row: 1;
+  font-weight: bold;
+  color: rgb(218, 120, 29);
+  margin: 0;
+  font-weight: bold;
+}
+
+.nickname-container {
+  grid-row: 2;
+  width: 100%;
+}
+
+.nickname{
+  display: none;
+}
+
+.nickname>p{
+  color: gray;
+  font-style: oblique;
+  letter-spacing: 2px;
+  display: inline;
+}
+
+.player-dream-team.has-nickname .give-dt-nickname{
+  display: none;
+}
+
+.player-dream-team.has-nickname .nickname{
+  display: inline-block;
+}
+
+.give-dt-nickname>button{
+  height: 100%;
+  border: solid 2px rgba(218, 120, 29, 0.527);
+}
+
+.give-dt-nickname{
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.give-dt-nickname>input{
+  font-size: small;
+  text-indent: 10px;
+}
+
+.player-dream-team > ul {
+  grid-row: 3;
+}
+
+.player-dream-team .img-not-found {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 700px) {
+  body{
+    font-size: 80%;
+  }
+  #dream-team-container{
+    width: 100%;
+    grid-gap: 10px;
+    padding: 5px;
+  }
+  #dream-team-players{
+    padding: 5px;
+  }
+  #dream-team-container>h1{
+    margin-bottom: 20px;
+  }
+  input{
+    font-size: 90%;
+    text-indent: 5px;
+    padding: 5px;
+  }
+  button{
+    font-size: smaller;
+  }
+}
